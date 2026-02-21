@@ -1,0 +1,47 @@
+\documentclass[10pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{utils}
+
+\input{theming.tex}
+
+\title[S2-APP6: Analyse d'EQ analogique]{S2-APP6: Analyse d'un égaliseur analogique}
+\author[Benjamin Chausse \& Cédrick Pelchat]{
+  Benjamin Chausse (chab1704) \\
+  Shawn Couture (cous1912)
+}
+
+\institute[UDS]{Université de Sherbrooke}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{frame}
+  \frametitle{Table des matières}
+  \tableofcontents
+\end{frame}
+
+\section{Problématique et pipeline}
+\input{01-intro.tex}
+
+\section{Correction des aberrations}
+\input{02-aberrations.tex}
+
+\section{Débruitage}
+\input{03-bruit.tex}
+
+\section{Compression d'image}
+\input{04-compression.tex}
+
+\section{Conclusion}
+\input{05-conclusion.tex}
+
+\end{document}

@@ -1,0 +1,33 @@
+% \usetheme{Madrid}
+
+\usetheme{CambridgeUS}
+\usecolortheme{spruce}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]{}% Number float-like environments
+
+% Make toc bullets dark green to match the theme
+\setbeamercolor{section number projected}{bg=green!40!black,fg=white}
+\setbeamercolor{subsection number projected}{bg=green!40!black,fg=white}
+% Do the same for bullets in itemize/enumerate environments
+\setbeamercolor{item projected}{bg=green!40!black,fg=white}
+\setbeamercolor{subitem projected}{bg=green!40!black,fg=white}
+\setbeamercolor{subsubitem projected}{bg=green!40!black,fg=white}
+% Change the color of "Figure X -" in captions
+\setbeamercolor{caption name}{fg=green!40!black}
+
+\renewcommand{\frenchtablename}{Tableau}
+
+\AtBeginSection[]{
+	\begin{frame}[noframenumbering,plain]
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+\end{frame}
+}
+
+
+
