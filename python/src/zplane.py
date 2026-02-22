@@ -22,6 +22,8 @@
 import sys
 import os
 
+import matplotlib
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from img import _output
@@ -30,7 +32,7 @@ import matplotlib.pyplot as plt
 from matplotlib import patches
 
 
-def zplane(b, a, filename=None):
+def zplane(b, a, filename: str | None = None):
     """Plot the complex z-plane given a transfer function."""
 
     # get a figure/plot
@@ -98,3 +100,15 @@ def zplane(b, a, filename=None):
 
     return z, p, k
 
+
+def main():
+    matplotlib.use("qt5agg")
+    zeros = [0, 0.2 + 0.8j, 0.2 - 0.8j]
+    poles = [0.9, -0.8 + 0.2j, -0.8 - 0.2j]
+    b = np.poly(zeros)  # numerator
+    a = np.poly(poles)  # denominator
+    zplane(b, a)
+
+
+if __name__ == "__main__":
+    main()
