@@ -60,9 +60,9 @@ def main():
     plt.close()
 
     orig = img.aberrated()
-    img.save("aberration_before.png", orig)
+    img.save("aberration-before.png", orig)
     fixed = fix(orig)
-    img.save("aberration_after.png", fixed)
+    img.save("aberration-after.png", fixed)
 
 
 if __name__ == "__main__":
