@@ -2,7 +2,7 @@ import numpy as np
 from numpy import pi
 
 
-def polar(theta, r=1):
+def polar(theta: float, r: int | float = 1.0) -> complex:
     """
     returns a valid python complex number z = (a + bj)
     given that complex number in it's polar form: z = r * e**(j * theta)
