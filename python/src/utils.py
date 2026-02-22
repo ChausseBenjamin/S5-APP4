@@ -10,6 +10,15 @@ def polar(theta: float, r: int | float = 1.0) -> complex:
     return r * np.exp(1j * theta)
 
 
+def dB2Amp(val: int | float | np.ndarray) -> float | np.ndarray:
+    return np.power(10.0, np.asarray(val, dtype=float) / 20.0)
+
+
+def amp2dB(val: int | float | np.ndarray) -> float | np.ndarray:
+    val_arr = np.asarray(val, dtype=float)
+    return 20.0 * np.log10(val_arr)
+
+
 def main():
     polarTests = [
         # theta (radians), radius, expected
@@ -26,6 +35,25 @@ def main():
             print(f"VALID: {r}e^(j{theta}) = {z}")
         else:
             print(f"ERROR! expected: {r}e^(j{theta}) = {expected}, got {z}")
+
+    # dB <-> Amplitude tests
+    dbTests = [-60, -20, 0, 6]
+    for db in dbTests:
+        amp = dB2Amp(db)
+        db_back = amp2dB(amp)
+        if np.isclose(db, db_back):
+            print(f"VALID: {db} dB -> {amp} -> {db_back} dB")
+        else:
+            print(f"ERROR! {db} dB roundtrip failed (got {db_back})")
+
+    # vector test
+    db_vec = np.array([-60, -20, 0])
+    amp_vec = dB2Amp(db_vec)
+    db_vec_back = amp2dB(amp_vec)
+    if np.allclose(db_vec, db_vec_back):
+        print("VALID: vector dB roundtrip")
+    else:
+        print("ERROR! vector dB roundtrip failed")
 
 
 if __name__ == "__main__":
