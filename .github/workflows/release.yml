@@ -4,7 +4,7 @@ on:
     branches: [rapport]
   workflow_dispatch: # Allow manual triggers
 env:
-  LATEX_DIR: rapport
+  LATEX_DIR: presentation
   LATEX_MAIN: 00-main.tex
   DOCKER_IMAGE: chaussebenjamin/tex-compiler
 permissions:
