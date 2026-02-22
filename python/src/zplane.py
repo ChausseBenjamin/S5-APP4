@@ -19,23 +19,25 @@
 # Alexander Kain for CS506/606 "Special Topics: Speech Signal Processing"
 # CSLU / OHSU, Spring Term 2011.
 
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from img import _output
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import patches
-from matplotlib.figure import Figure
-from matplotlib import rcParams
 
 
 def zplane(b, a, filename=None):
-    """Plot the complex z-plane given a transfer function.
-    """
+    """Plot the complex z-plane given a transfer function."""
 
     # get a figure/plot
     ax = plt.subplot(111)
 
     # create the unit circle
-    uc = patches.Circle((0, 0), radius=1, fill=False,
-                        color='black', ls='dashed')
+    uc = patches.Circle((0, 0), radius=1, fill=False, color="black", ls="dashed")
     ax.add_patch(uc)
 
     # The coefficients are less than 1, normalize the coeficients
@@ -57,31 +59,42 @@ def zplane(b, a, filename=None):
     k = kn / float(kd)
 
     # Plot the zeros and set marker properties
-    t1 = plt.plot(z.real, z.imag, 'go', ms=10)
-    plt.setp(t1, markersize=10.0, markeredgewidth=1.0,
-             markeredgecolor='k', markerfacecolor='g')
+    t1 = plt.plot(z.real, z.imag, "go", ms=10)
+    plt.setp(
+        t1,
+        markersize=10.0,
+        markeredgewidth=1.0,
+        markeredgecolor="k",
+        markerfacecolor="g",
+    )
 
     # Plot the poles and set marker properties
-    t2 = plt.plot(p.real, p.imag, 'rx', ms=10)
-    plt.setp(t2, markersize=12.0, markeredgewidth=3.0,
-             markeredgecolor='r', markerfacecolor='r')
+    t2 = plt.plot(p.real, p.imag, "rx", ms=10)
+    plt.setp(
+        t2,
+        markersize=12.0,
+        markeredgewidth=3.0,
+        markeredgecolor="r",
+        markerfacecolor="r",
+    )
 
-    ax.spines['left'].set_position('center')
-    ax.spines['bottom'].set_position('center')
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
+    ax.spines["left"].set_position("center")
+    ax.spines["bottom"].set_position("center")
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
 
     # set the ticks
-    r = 1.5;
-    plt.axis('scaled');
+    r = 1.5
+    plt.axis("scaled")
     plt.axis([-r, r, -r, r])
-    ticks = [-1, -.5, .5, 1];
-    plt.xticks(ticks);
+    ticks = [-1, -0.5, 0.5, 1]
+    plt.xticks(ticks)
     plt.yticks(ticks)
 
     if filename is None:
         plt.show()
     else:
-        plt.savefig(filename)
+        plt.savefig(f"{_output}/{filename}")
 
     return z, p, k
+

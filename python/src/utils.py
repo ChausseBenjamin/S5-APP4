@@ -2,7 +2,7 @@ import numpy as np
 from numpy import pi
 
 
-def polarZ(theta, r=1):
+def polar(theta, r=1):
     """
     returns a valid python complex number z = (a + bj)
     given that complex number in it's polar form: z = r * e**(j * theta)
@@ -21,7 +21,7 @@ def main():
     ]
     for case in polarTests:
         theta, r, expected = case
-        z = polarZ(theta, r)
+        z = polar(theta, r)
         if np.isclose(z, expected):
             print(f"VALID: {r}e^(j{theta}) = {z}")
         else:
