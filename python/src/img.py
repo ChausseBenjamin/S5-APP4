@@ -55,7 +55,7 @@ def save(filename: str, data: np.ndarray) -> None:
     """
     Save npy data as a png into the default output directory
     """
-    plt.imsave(f"{_output}/{filename}", data)
+    plt.imsave(f"{_output}/{filename}", data, cmap="gray")
 
 
 def main():
