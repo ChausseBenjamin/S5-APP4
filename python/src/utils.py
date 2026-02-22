@@ -14,10 +14,10 @@ def main():
     polarTests = [
         # theta (radians), radius, expected
         (0, 1, 1 + 0j),
-        (pi/2, 2, 0 + 2j),
+        (pi / 2, 2, 0 + 2j),
         (pi, 3, -3 + 0j),
-        (3*pi/2, 4, 0 - 4j),
-        (2*pi, 5, 5 + 0j),
+        (3 * pi / 2, 4, 0 - 4j),
+        (2 * pi, 5, 5 + 0j),
     ]
     for case in polarTests:
         theta, r, expected = case
