@@ -22,7 +22,8 @@ def filter():
         polar(pi / 8, 0.95),
         polar(-pi / 8, 0.95),
     ]
-    zeros = [0, 0.8, -0.99]
+    # There is (z - 0.99)^2, I think that zero gets included twice:
+    zeros = [0, 0.8, -0.99, -0.99]
     b = np.poly(zeros)
     a = np.poly(poles)
     return (a, b)

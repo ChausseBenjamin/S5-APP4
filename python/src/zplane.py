@@ -96,7 +96,7 @@ def zplane(b, a, filename: str | None = None):
     if filename is None:
         plt.show()
     else:
-        plt.savefig(f"{_output}/{filename}")
+        plt.savefig(f"{_output}/{filename}", bbox_inches="tight")
 
     return z, p, k
 
