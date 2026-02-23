@@ -6,11 +6,30 @@
 
 \begin{frame}
 \frametitle{Transformation bilinéaire — Théorie}
-\todo{}
+\todo{ Les grandes ligne des calculs (+explications) pour resoudre le $H(z)$ final}
 \end{frame}
 
 \begin{frame}
 \frametitle{Transformation bilinéaire — Résultats}
-\todo{}
+\textbf{Équation obtenue:}
+% Numerator: z^2 + 2z + 1
+% Denominator: 2.39z^2 + 1.1z + 0.505
+	\begin{equation}
+		H(z) = \frac{ z^2 + 2z + 1 }{ 2.39z^2 + 1.1z + 0.505 }
+	\end{equation}
+
+	\begin{columns}
+
+		\begin{column}{0.5\textwidth}
+			\quickfigure{\footnotesize{Filtre manuel en fréquences}}{denoise-manual-freq
+			}{}{denoise-manual-freq.pdf}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+			\quickfigure{\footnotesize{Filtre manuel $z$}}{denoise-manual-zplane
+			}{.5}{denoise-manual-zplane.pdf}
+		\end{column}
+
+	\end{columns}
 \end{frame}
 
