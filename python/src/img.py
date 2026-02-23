@@ -53,10 +53,7 @@ def complete() -> np.ndarray:
 
 
 def apply(b: np.ndarray, a: np.ndarray, data: np.ndarray):
-    result = data.copy()
-    for row in range(result.shape[0]):
-        result[row, :] = sig.lfilter(b, a, result[row, :])
-    return result
+    return sig.lfilter(b, a, data.copy())
 
 
 def save(filename: str, data: np.ndarray) -> None:
