@@ -26,22 +26,22 @@ def filter():
     zeros = [0, 0.8, -0.99, -0.99]
     b = np.poly(zeros)
     a = np.poly(poles)
-    return (a, b)
+    return (b, a)
 
 
 def inverse():
     """
     This is the function to undo the aberration
     """
-    a, b = filter()
-    return (b, a)
+    b, a = filter()
+    return (a, b)
 
 
 def fix(data: np.ndarray) -> np.ndarray:
     """
     Apply the inverse filter from `inverse()` to every row and column in the input data
     """
-    a, b = inverse()
+    b, a = inverse()
 
     result = data.copy()
     for col in range(result.shape[1]):
@@ -53,11 +53,11 @@ def fix(data: np.ndarray) -> np.ndarray:
 
 def main():
 
-    a, b = filter()
-    zplane(a, b, "aberration-zplane-orig.pdf")
+    b, a = filter()
+    zplane(b, a, "aberration-zplane-orig.pdf")
     plt.close()
-    a, b = inverse()
-    zplane(a, b, "aberration-zplane-inv.pdf")
+    b, a = inverse()
+    zplane(b, a, "aberration-zplane-inv.pdf")
     plt.close()
 
     orig = img.aberrated()
