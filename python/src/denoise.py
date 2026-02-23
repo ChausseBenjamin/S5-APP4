@@ -1,14 +1,13 @@
 import sys
 import os
 
-from zplane import zplane
-
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils import amp2dB
+from utils import amp2dB, normfreq
+from zplane import zplane
 from img import _output
 
-from scipy.signal import sosfreqz
+from scipy.signal import buttord, cheb1ord, cheb2ord, ellipord
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.signal as sig
@@ -25,38 +24,87 @@ _damp_amp = -60
 _fluctuation = 0.2
 _nyquist = 1600 / 2
 
-
-def butter(n: int = 1, output: str = "sos"):
-    return sig.butter(n, _cutoff, btype="low", fs=_rate, output=output)
-
-
-def cheby1(n: int = 1, output: str = "sos"):
-    return sig.cheby1(n, _fluctuation, _cutoff, btype="low", fs=_rate, output=output)
+_norm_cutoff = _cutoff
+_norm_damp_target = _damp_target
 
 
-def cheby2(n: int = 1, output: str = "sos"):
-    return sig.cheby2(n, abs(_damp_amp), _cutoff, btype="low", fs=_rate, output=output)
+def butter():
+    # wp: *W*idth where shit *P*asses
+    #   - band pass from a to b (assume a=0 if only a float is given)
+    #   - wp must be normalized freq
+    # ws: *W*idth where shit is *S*topped
+    #   - F_c (again normalized freq)
+    # gpass: Minimum *G*ain where shit *P*asses
+    # gstop: Maximum *G*ain where shit is *S*topped
 
-
-def ellip(n: int = 1, output: str = "sos"):
-    return sig.ellip(
-        n, _fluctuation, abs(_damp_amp), _cutoff, btype="low", fs=_rate, output=output
+    n, wn = buttord(
+        wp=_norm_cutoff,
+        ws=_norm_damp_target,
+        gpass=_fluctuation,
+        gstop=abs(_damp_amp),
+        fs=_rate,
     )
+    res = sig.butter(n, wn, fs=_rate)
+    return n, res[0], res[1]
 
 
-def manual(output: str = "sos"):
+def cheby1():
+    n, wn = cheb1ord(
+        wp=_norm_cutoff,
+        ws=_norm_damp_target,
+        gpass=_fluctuation,
+        gstop=abs(_damp_amp),
+        fs=_rate,
+    )
+    res = sig.cheby1(n, abs(_fluctuation), wn, fs=_rate)
+    return n, res[0], res[1]
+
+
+def cheby2():
+    n, wn = cheb2ord(
+        wp=_norm_cutoff,
+        ws=_norm_damp_target,
+        gpass=_fluctuation,
+        gstop=abs(_damp_amp),
+        fs=_rate,
+    )
+    res = sig.cheby2(n, abs(_damp_amp), wn, fs=_rate)
+    return n, res[0], res[1]
+
+
+def ellip():
+    n, wn = ellipord(
+        wp=_norm_cutoff,
+        ws=_norm_damp_target,
+        gpass=_fluctuation,
+        gstop=abs(_damp_amp),
+        fs=_rate,
+    )
+    res = sig.ellip(n, abs(_fluctuation), abs(_damp_amp), wn, fs=_rate)
+    return n, res[0], res[1]
+
+
+def manual():
     """
     Butterworth filter calculated by hand:
       Numerator: z^2 + 2z + 1
       Denominator: 2.39z^2 + 1.1z + 0.505
     """
+    n = 2
     b = np.array([1.0, 2.0, 1.0])
     a = np.array([2.39, 1.1, 0.505])
 
-    if output == "ba":
-        return b, a
-    else:
-        return sig.tf2sos(b, a)
+    return n, b, a
+
+
+def fix(data):
+    """
+    Apply the final de-noising filter to the input data/image
+    Elliptical only required an order=3 which was the smallest
+    so it got chosen.
+    """
+    _, b, a = ellip()
+    return img.apply(b, a, data)
 
 
 def overlay(ax):
@@ -68,7 +116,7 @@ def overlay(ax):
 
     # Allowed fluctuation region (passband)
     ax.fill_between(
-        [0, _cutoff],
+        [1, _cutoff],
         -_fluctuation,
         _fluctuation,
         color="teal",
@@ -88,8 +136,8 @@ def overlay(ax):
     )
 
 
-def freqplot(sos):
-    return sosfreqz(sos, fs=_rate)
+def freqplot(b, a, rate: int = _rate, width: int = 512):
+    return sig.freqz(b, a, fs=rate, worN=width)
 
 
 def passesCriterias(w, h_db):
@@ -121,13 +169,14 @@ def passesCriterias(w, h_db):
 
 def multiNPlot(filter, ax, name: str = "Filtre", max: int = 12):
     """
+    LEGACY CODE: FORGET THIS...
     Plot increasing orders of a filter on the given axes until one meets the criteria.
     """
     for n in range(1, max):
         sos = filter(n=n)
         w, h = freqplot(sos)
         h_db = amp2dB(np.abs(h))
-        ax.semilogx(w, h_db, label=f"{name} d'ordre {n}")
+        ax.semilogx(w, h_db, linewidth=1, label=f"{name} d'ordre {n}")
 
         full_pass, coast_min, coast_max, damped_max = passesCriterias(w, h_db)
         if full_pass:
@@ -153,7 +202,11 @@ def main():
     for name, filter_func in types.items():
         fig, ax = plt.subplots(figsize=(11.5, 4.5))
 
-        multiNPlot(filter_func, ax, name)
+        # multiNPlot(filter_func, ax, name)
+        n, b, a = filter_func()
+        w, h = freqplot(b, a, _rate)
+        h_db = amp2dB(np.abs(h))
+        ax.semilogx(w, h_db, linewidth=1, label=f"{name} d'ordre {n}")
 
         overlay(ax)
 
@@ -165,61 +218,60 @@ def main():
         ax.legend()
 
         fig.savefig(
-            f"{_output}/denoise-{name.replace(' ', '-').lower()}-all.pdf",
+            f"{_output}/denoise-{name.replace(' ', '-').lower()}.pdf",
             bbox_inches="tight",
         )
         plt.close(fig)
 
-    # Chosen filter alone (Order 3 Elliptical)
-    fig, ax = plt.subplots(figsize=(11.5, 4.5))
-    sos = ellip(3)
-    w, h = freqplot(np.abs(sos))
-    h_db = amp2dB(np.abs(h))
-    ax.semilogx(w, h_db, label="Filtre Elliptique d'ordre 3")
-    overlay(ax)
-    ax.set_ylim(-70, 3)
-    ax.set_xlim(0, _nyquist)
-    ax.set_xlabel("Fréquence [Hz]")
-    ax.set_ylabel("Amplitude [dB]")
-    ax.grid(True, which="both", ls="--", alpha=0.3)
-    ax.legend()
-    fig.savefig(
-        f"{_output}/denoise-chosen-freq.pdf",
-        bbox_inches="tight",
-    )
-    plt.close(fig)
+    # # Chosen filter alone (Order 3 Elliptical)
+    # fig, ax = plt.subplots(figsize=(11.5, 4.5))
+    # sos = ellip(3)
+    # w, h = freqplot(np.abs(sos))
+    # h_db = amp2dB(np.abs(h))
+    # ax.semilogx(w, h_db, label="Filtre Elliptique d'ordre 3")
+    # overlay(ax)
+    # ax.set_ylim(-70, 3)
+    # ax.set_xlim(0, _nyquist)
+    # ax.set_xlabel("Fréquence [Hz]")
+    # ax.set_ylabel("Amplitude [dB]")
+    # ax.grid(True, which="both", ls="--", alpha=0.3)
+    # ax.legend()
+    # fig.savefig(
+    #     f"{_output}/denoise-final-freq.pdf",
+    #     bbox_inches="tight",
+    # )
+    # plt.close(fig)
 
-    # Poles and zeroes of chosen filter
-    b, a = ellip(3, "ba")
-    zplane(b, a, "denoise-chosen-zplane.pdf")
+    # Poles and zeroes of final filter
+    n, b, a = ellip()
+    zplane(b, a, "denoise-zplane-final.pdf")
     py_fix = img.apply(b, a, orig)
 
     # Filter calculated by hand in the frequency domain
     fig, ax = plt.subplots(figsize=(11.5, 4.5))
-    sos = manual()
-    w, h = freqplot(sos)
+    overlay(ax)
+    n, b, a = manual()
+    w, h = freqplot(b, a, _rate)
     h_db = amp2dB(np.abs(h))
-    ax.semilogx(w, h_db, label="$H(z)$ calculé à main")
-    # overlay(ax)
-    ax.set_ylim(-70, 3)
+    ax.semilogx(w, h_db, label=f"$H(z)$ calculé à main d'ordre {n}")
     ax.set_xlim(0, _nyquist)
     ax.set_xlabel("Fréquence [Hz]")
     ax.set_ylabel("Amplitude [dB]")
     ax.grid(True, which="both", ls="--", alpha=0.3)
     ax.legend()
     fig.savefig(
-        f"{_output}/denoise-manual-freq.pdf",
+        f"{_output}/denoise-hand-freq.pdf",
         bbox_inches="tight",
     )
     plt.close(fig)
 
-    b, a = manual("ba")
-    zplane(b, a, f"denoise-manual-zplane.pdf")
+    n, b, a = manual()
+    zplane(b, a, f"denoise-zplane-hand.pdf")
     manual_fix = img.apply(b, a, orig)
 
     imgs = {
         "orig": orig,
-        "manual": manual_fix,
+        "hand": manual_fix,
         "python": py_fix,
     }
     for name, data in imgs.items():
