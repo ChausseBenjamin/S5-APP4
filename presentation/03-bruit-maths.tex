@@ -7,6 +7,69 @@
 \begin{frame}
 \frametitle{Transformation bilinéaire — Théorie}
 \todo{ Les grandes ligne des calculs (+explications) pour resoudre le $H(z)$ final}
+\begin{enumerate}
+    \item Normalization des fréquences digitals
+    \item Application de la distortion (gauchissement des fréquences)
+	\item Remplacement dans l'équation donnée
+	\item Conversion de $s$ en $z$
+	\item Simplifications
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Transformation bilinéaire — Conversion des fréquences}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\centering
+			$f_e = 1600\,\text{Hz}$
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\centering
+			$f_c = 500\,\text{Hz}$
+		\end{column}
+	\end{columns}
+
+	\vspace{0.5cm}
+
+	\begin{equation}
+		\bar{\omega}_d&=\frac{2\pi f_d}{f_e}
+	\end{equation}
+	\begin{equation}
+		\bar\omega_c&=\frac{5\pi}{8}
+	\end{equation}
+	\begin{equation}
+		\omega_a&=\frac{2}{T_e}\tan\left(\frac{\bar\omega_d}{2}\right)
+	\end{equation}
+	\begin{equation}
+		\omega_c&=4789.14
+	\end{equation}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Transformation bilinéaire — Remplacement dans l'équation donnée}
+	\begin{equation}
+		H(s)=\frac{1}{(\frac{s}{\omega_c})^2+\sqrt2(\frac{s}{\omega_c})+1}
+	\end{equation}
+	\begin{equation}
+		H(s)=\frac{1}{(\frac{s}{4789.14})^2+\sqrt2(\frac{s}{4789.14})+1}
+	\end{equation}
+
+	\vspace{0.5cm}
+
+	\begin{equation}
+		s=\frac{2}{T_e}\cdot\frac{1-z^{-1}}{1+z^{-1}}
+	\end{equation}
+	\begin{equation}
+		H(z)=\frac{1}{
+		(\frac{
+		3200\frac{1-z^{-1}}{1+z^{-1}}}
+		{4789.14})^2
+		+\sqrt2
+		(\frac{
+		3200\frac{1-z^{-1}}{1+z^{-1}}
+		}{4789.14})
+		+1}
+	\end{equation}
 \end{frame}
 
 \begin{frame}
