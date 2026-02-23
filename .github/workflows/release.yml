@@ -1,7 +1,7 @@
 name: Build and Release LaTeX Document
 on:
   push:
-    branches: [rapport]
+    tags: ['*']
   workflow_dispatch: # Allow manual triggers
 env:
   LATEX_DIR: presentation
@@ -98,7 +98,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ github.run_number }}
+          tag_name: ${{ github.ref_name }}
           name: "Release v${{ github.run_number }} (commit ${{ steps.vars.outputs.short_sha }})"
           body: |
             Automated release of LaTeX document compiled from commit ${{ steps.vars.outputs.commit_sha }}.
@@ -121,4 +121,4 @@ jobs:
           echo "LaTeX document compiled successfully!"
           echo "PDF: ${{ steps.assets.outputs.pdf_name }}"
           echo "ZIP: ${{ steps.assets.outputs.zip_name }}"
-          echo "Release: https://github.com/${{ github.repository }}/releases/tag/v${{ github.run_number }}"
+          echo "Release: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
