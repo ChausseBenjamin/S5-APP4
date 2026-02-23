@@ -233,6 +233,7 @@ def main():
     Debug.Start("compression.py")
     image = img.original()
     compressed = compress_image(image=image, keep_ratio=0.5)
+    Debug.Log("Saving compressed image")
     img.save("compressed.png", compressed)
     Debug.End()
 
