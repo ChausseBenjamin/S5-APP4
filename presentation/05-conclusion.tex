@@ -1,25 +1,59 @@
+
+\newcommand{\portion}{0.2}
+
 \begin{frame}[fragile]
 \frametitle{Conclusion}
+	\begin{columns}[t]
 
-\footnotesize{\begin{Verbatim}[frame=single]
-def load_png(path: str) -> np.ndarray:
-    plt.gray()
-    data = mpimg.imread(path)
-    if data.ndim == 3:
-        return np.mean(data, -1)
-    return data
-\end{Verbatim}}
+	\begin{column}{\portion\linewidth}
+		\quickfigure{
+			\tiny{Originelle}
+		}{complete-initial}{}{complete-initial.png}
+	\end{column}
 
-\tiny{\begin{Verbatim}[frame=single]
-def load_png(path: str) -> np.ndarray:
-    plt.gray()
-    data = mpimg.imread(path)
-    if data.ndim == 3:
-        return np.mean(data, -1)
-    return data
-\end{Verbatim}}
+	\begin{column}{\portion\linewidth}
+		\quickfigure{
+			\tiny{Sans aberrations}
+		}{complete-no-aberration}{}{complete-no-aberration.png}
+	\end{column}
 
+	\begin{column}{\portion\linewidth}
+		\quickfigure{
+			\tiny{Tournée}
+		}{complete-rotated}{}{complete-rotated.png}
+	\end{column}
+
+	\begin{column}{\portion\linewidth}
+		\quickfigure{
+			\tiny{Débruitée}
+		}{complete-denoised}{}{complete-denoised.png}
+	\end{column}
+
+	\begin{column}{\portion\linewidth}
+		\quickfigure{
+			\tiny{Compressée}
+		}{complete-compressed}{}{complete-compressed.png}
+	\end{column}
+
+\end{columns}
 \end{frame}
+
+% \footnotesize{\begin{Verbatim}[frame=single]
+% def load_png(path: str) -> np.ndarray:
+%     plt.gray()
+%     data = mpimg.imread(path)
+%     if data.ndim == 3:
+%         return np.mean(data, -1)
+%     return data
+% \end{Verbatim}}
+% \tiny{\begin{Verbatim}[frame=single]
+% def load_png(path: str) -> np.ndarray:
+%     plt.gray()
+%     data = mpimg.imread(path)
+%     if data.ndim == 3:
+%         return np.mean(data, -1)
+%     return data
+% \end{Verbatim}}
 
 
 
