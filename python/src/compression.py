@@ -93,7 +93,6 @@ def compress_projected(projected: np.ndarray, keep_ratio: float):
     Debug.Log(f"Going from {n_components} to {k} non 0 columns")
     # On met à zéro les composantes faibles
     compressed[:, k:] = 0
-    
     Debug.End()
     return compressed
 
@@ -106,8 +105,8 @@ def reconstruct_image(compressed, change_of_basis_matrix, mean):
     Debug.Start("reconstruct_image")
     reconstructed = compressed @ change_of_basis_matrix
     reconstructed += mean
-    Debug.Log(f"The compression is {len(compressed)}")
-    Debug.Log(f"The reconstruction is {len(reconstructed)}")
+    Debug.Log(f"The compression is {compressed.size}")
+    Debug.Log(f"The reconstruction is {reconstructed.size}")
     Debug.End()
     return reconstructed
 
@@ -132,6 +131,8 @@ def compress_image(image: np.ndarray, keep_ratio=0.5):
     
     compressed = compress_projected(projected, keep_ratio)
     reconstructed = reconstruct_image(compressed, P, mean)
+
+    analyze_worth_of_compression(image, projected, eigenvectors, mean, keep_ratio, reconstructed)
     Debug.End()
     return reconstructed
 
@@ -157,15 +158,81 @@ def compare_images(img1: np.ndarray, img2: np.ndarray, max_pixel_value=255.0) ->
         Debug.End()
         return float("inf")
     result = 10 * np.log10(max_pixel_value / np.sqrt(mse_value))
-    Debug.Log(f"There's {result} dB difference between the 2 images")
+    Debug.Log(f"There's {result} dB difference between the 2 images. ({max_pixel_value / np.sqrt(mse_value)})")
     Debug.End()
     return result
+
+def analyze_worth_of_compression(original: np.ndarray,
+                                 projected: np.ndarray,
+                                 eigenvectors: np.ndarray,
+                                 mean: np.ndarray,
+                                 keep_ratio,
+                                 compressed):
+    """
+    Checks whether PCA compression reduces the amount of data
+    required to reconstruct the image.
+    """
+
+    Debug.Start("analyze_worth_of_compression")
+
+    n_components = projected.shape[1]
+    k = int(n_components * keep_ratio)
+
+    # Original storage
+    original_storage = original.size
+
+    Debug.Log("Removing columns outside of kept ones that stayed for simplicity")
+    projected = projected[:, :k]
+    eigenvectors = eigenvectors[:, :k]
+
+    # Determine how many components are actually kept
+    # Count non-zero columns in projected (since you zeroed weak components)
+    non_zero_cols = np.any(projected != 0, axis=0)
+    k = np.sum(non_zero_cols)
+
+    n_samples = projected.shape[0]
+    n_features = eigenvectors.shape[0]
+
+    # Storage needed for reconstruction
+    projected_storage = n_samples * k
+    eigenvectors_storage = n_features * k
+    mean_storage = mean.size
+
+    total_compressed_storage = (
+        projected_storage +
+        eigenvectors_storage +
+        mean_storage
+    )
+
+    Debug.Log(f"Kept components (k): {k}")
+    Debug.Log(f"Original:            {original_storage} values")
+    Debug.Log(f"Projected:           {projected_storage} values")
+    Debug.Log(f"Eigenvectors:        {eigenvectors_storage} values")
+    Debug.Log(f"Mean:                {mean_storage} values")
+    Debug.Log(f"Total compressed:    {total_compressed_storage} values")
+
+    compression_ratio = total_compressed_storage / original_storage
+    Debug.Log(f"Compression ratio: {compression_ratio:.3f}")
+
+    db = compare_images(original, compressed)
+    if db < 45:
+        Debug.Error("Image is noticably compressed. <45")
+    else:
+        Debug.Log("Compression dB is judged adequat")
+
+    if total_compressed_storage < original_storage:
+        Debug.Log("Compression is worth it.")
+    else:
+        Debug.Warn("Compression is NOT worth it.")
+
+    Debug.End()
+
+    return compression_ratio
 
 def main():
     Debug.Start("compression.py")
     image = img.original()
-    compressed = compress_image(image=image, keep_ratio=0.50)
-    compare_images(image, compressed)
+    compressed = compress_image(image=image, keep_ratio=0.5)
     img.save("compressed.png", compressed)
     Debug.End()
 

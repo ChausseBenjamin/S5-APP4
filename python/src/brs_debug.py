@@ -6,6 +6,14 @@ class Debug:
     _currentDepth = 0
     _indentationStyle = "|\t"
     _DontDebugEnabled:bool = False
+
+    RED:str = "\033[31m"
+    GREEN:str = "\033[32m"
+    YELLOW:str = "\033[33m"
+    BLUE:str = "\033[34m"
+    MAGENTA:str = "\033[35m"
+    CYAN:str = "\033[36m"
+    RESET:str = "\033[0m"
     #endregion
 
     def Start(functionName:str=None, DontDebug:bool=False):
