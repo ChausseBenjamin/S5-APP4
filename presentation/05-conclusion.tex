@@ -1,5 +1,15 @@
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Conclusion}
-\todo{}
+\begin{Verbatim}[frame=single]
+def load_png(path: str) -> np.ndarray:
+    plt.gray()
+    data = mpimg.imread(path)
+    if data.ndim == 3:
+        return np.mean(data, -1)
+    return data
+\end{Verbatim}
+
 \end{frame}
+
+
 
