@@ -1,0 +1,35 @@
+\subsection{Transformation bilinéaire - (Approche mathématique)}
+
+% Tu peux changer les noms de diapos si tu veux.
+% Je trouvais ca logique d'avoir theorie+resultats mais tu vas peut-etre vouloir
+% autre chose
+
+\begin{frame}
+\frametitle{Transformation bilinéaire — Théorie}
+\todo{ Les grandes ligne des calculs (+explications) pour resoudre le $H(z)$ final}
+\end{frame}
+
+\begin{frame}
+\frametitle{Transformation bilinéaire — Résultats}
+\textbf{Équation obtenue:}
+% Numerator: z^2 + 2z + 1
+% Denominator: 2.39z^2 + 1.1z + 0.505
+	\begin{equation}
+		H(z) = \frac{ z^2 + 2z + 1 }{ 2.39z^2 + 1.1z + 0.505 }
+	\end{equation}
+
+	\begin{columns}
+
+		\begin{column}{0.5\textwidth}
+			\quickfigure{\footnotesize{Filtre manuel en fréquences}}{denoise-manual-freq
+			}{}{denoise-manual-freq.pdf}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+			\quickfigure{\footnotesize{Filtre manuel $z$}}{denoise-manual-zplane
+			}{.5}{denoise-manual-zplane.pdf}
+		\end{column}
+
+	\end{columns}
+\end{frame}
+

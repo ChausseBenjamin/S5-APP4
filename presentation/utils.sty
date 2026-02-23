@@ -3,6 +3,8 @@
 \RequirePackage{tabularx}
 \RequirePackage{xcolor}
 
+\newcommand{\e}{\textrm{e}}
+
 % Wrap contents, list-of-figures, list-of-tables in non-numbered pages
 \newcommand{\contents}[1]{
   \pagenumbering{gobble}%
@@ -25,7 +27,7 @@
 \newcommand{\quickfigure}[4]{
   \begin{figure}[H]
     \centering
-		\includegraphics[width=#3\textwidth]{figures/#4}
+		\includegraphics[width=#3\linewidth]{figures/#4}
     \caption{#1}\label{fig:#2}
   \end{figure}
 }

@@ -1,0 +1,66 @@
+\subsection{Approche Python}
+
+\begin{frame}
+\frametitle{Approche Python — Conception}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+
+			\quickfigure{
+				\footnotesize{Essais Butterworth}
+			}{noise-test-butter}{}{denoise-butterworth-all.pdf}
+
+			\quickfigure{
+				\footnotesize{Essais Elliptiques}
+			}{noise-test-butter}{}{denoise-elliptic-all.pdf}
+
+		\end{column}
+		\begin{column}{0.5\textwidth}
+
+			\quickfigure{
+				\footnotesize{Essais Chebyshev Type I}
+			}{noise-test-butter}{}{denoise-chebyshev-i-all.pdf}
+
+			\quickfigure{
+				\footnotesize{Essais Chebyshev Type II}
+			}{noise-test-butter}{}{denoise-chebyshev-ii-all.pdf}
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Approche Python — Choix final: Elliptique d'ordre 3}
+
+			\begin{table}
+			\caption{\footnotesize{Observations du filtre choisi}}
+			\footnotesize{\begin{tabular}{ll}
+				\toprule
+				Critère & Valeur (dB) \\
+				\midrule
+				$A_{\textrm{min}}\ 0-500$ Hz & $-0.19999\ldots$ \\
+				$A_{\textrm{max}}\ 0-500$ Hz & $-1.92865\ldots \times 10^{-15}$ \\
+				$A_{\textrm{max}}\ 750-800$ Hz\footnotemark[1] & $-60.00992\ldots$ \\
+				\bottomrule
+			\end{tabular}}
+			\end{table}
+
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+
+	\quickfigure{
+		\footnotesize{Filtre \textit{Python} choisi en fréquences}
+	}{noise-chosen-freq}{}{denoise-chosen-freq.pdf}
+
+		\end{column}
+		\begin{column}{0.5\textwidth}
+
+			\quickfigure{
+				\footnotesize{Filtre \textit{Python} choisi en $z$}
+			}{noise-chosen-zplane}{.45}{denoise-chosen-zplane.pdf}
+
+
+		\end{column}
+		\footnotetext[1]{800 Hz étant la fréquence de Nyquist}
+	\end{columns}
+
+\end{frame}
