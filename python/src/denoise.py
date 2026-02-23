@@ -223,25 +223,6 @@ def main():
         )
         plt.close(fig)
 
-    # # Chosen filter alone (Order 3 Elliptical)
-    # fig, ax = plt.subplots(figsize=(11.5, 4.5))
-    # sos = ellip(3)
-    # w, h = freqplot(np.abs(sos))
-    # h_db = amp2dB(np.abs(h))
-    # ax.semilogx(w, h_db, label="Filtre Elliptique d'ordre 3")
-    # overlay(ax)
-    # ax.set_ylim(-70, 3)
-    # ax.set_xlim(0, _nyquist)
-    # ax.set_xlabel("Fréquence [Hz]")
-    # ax.set_ylabel("Amplitude [dB]")
-    # ax.grid(True, which="both", ls="--", alpha=0.3)
-    # ax.legend()
-    # fig.savefig(
-    #     f"{_output}/denoise-final-freq.pdf",
-    #     bbox_inches="tight",
-    # )
-    # plt.close(fig)
-
     # Poles and zeroes of final filter
     n, b, a = ellip()
     zplane(b, a, "denoise-zplane-final.pdf")
