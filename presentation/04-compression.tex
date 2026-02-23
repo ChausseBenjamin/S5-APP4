@@ -1,141 +1,113 @@
 \begin{frame}
-\frametitle{Compression Matrice A — Théorie}
-\begin{enumerate}
-    \item Obtenir la matrice de covariance
+    \frametitle{Compression Matrice A — Théorie}
     \begin{enumerate}
-        \item Analyze des données (colonnes)
-        \item Construction du vecteur moyen
-        \item Centrage des données
-        \item Transposé de la matrice
-        \item Produit matricielle
+        \item Obtenir la matrice de covariance
+        \begin{enumerate}
+            \item Analyze des données (colonnes)
+            \item Construction du vecteur moyen
+            \item Centrage des données
+            \item Transposé de la matrice
+            \item Produit matricielle
+        \end{enumerate}
+        \item Valeurs propres
+        \begin{enumerate}
+            \item Application de la formule
+            \item Déterminant de la matrice
+            \item Valeurs $\lambda$ qui donnent $0$
+        \end{enumerate}
+        \item Vecteurs propres
+        \begin{enumerate}
+            \item $\Sigma-\lambda I$ pour chaque $\lambda$ trouvé sachant $\Sigma v=\lambda v$
+            \item Isolé $x$ et $y$ de chaque lignes (confirmation)
+            \item Posé une valeur ($x$ ou $y$)
+            \item Résolution pour trouvé la manquante
+        \end{enumerate}
     \end{enumerate}
-    \item Valeurs propres
-    \begin{enumerate}
-        \item Application de la formule
-        \item Déterminant de la matrice
-        \item Valeurs $\lambda$ qui donnent $0$
-    \end{enumerate}
-    \item Vecteurs propres
-    \begin{enumerate}
-        \item $\Sigma-\lambda I$ pour chaque $\lambda$ trouvé sachant $\Sigma v=\lambda v$
-        \item Isolé $x$ et $y$ de chaque lignes (confirmation)
-        \item Posé une valeur ($x$ ou $y$)
-        \item Résolution pour trouvé la manquante
-    \end{enumerate}
-\end{enumerate}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Matrice A - Covariance - Analyze des données}
-    \begin{equation}
-        \mathbf{A}=\begin{bmatrix}4&1\\2&5\end{bmatrix}
-    \end{equation}
-    \vspace{1cm}
-    \begin{equation}
-        a=\left(4,\space2 \right)
-    \end{equation}
-    \begin{equation}
-        b=\left(1,\space5 \right)
-    \end{equation}
-\end{frame}
 
 \begin{frame}
-    \frametitle{Matrice A - Covariance - Vecteurs moyens}
+    \frametitle{Déterminants pour les valeurs propres}
     \begin{equation}
-        \mu_a=\frac{4+2}{2}=3
+        \det(A-\lambda I)=0
     \end{equation}
-    \begin{equation}
-        \mu_b=\frac{1+5}{2}=3
-    \end{equation}
-    \vspace{1cm}
-    \begin{equation}
-        \mu=\begin{bmatrix}3\\3\end{bmatrix}
-    \end{equation}
-\end{frame}
 
-\begin{frame}
-    \frametitle{Matrice A - Covariance - Centrage des données}
     \begin{equation}
-        \Sigma=\mathbb{E}\left[(X-\mu)(X-\mu)^T\right]
+        \det\left(
+        \begin{bmatrix}
+            4-\lambda&1\\
+            2&5-\lambda
+        \end{bmatrix}
+        \right)=0
     \end{equation}
-    \begin{equation}
-        X-\mu
-    \end{equation}
-    \vspace{1cm}
-    \begin{equation}
-        \begin{bmatrix}4&1\\2&5\end{bmatrix}-\begin{bmatrix}3\\3\end{bmatrix}=\begin{bmatrix}1&-2\\-1&2\end{bmatrix}
-    \end{equation}
-\end{frame}
 
-\begin{frame}
-    \frametitle{Matrice A - Covariance - Produit matricielle}
     \begin{equation}
-        \Sigma=X\times X^T
-    \end{equation}
-    \begin{equation}
-        X^T=\begin{bmatrix}1&-1\\-2&2\end{bmatrix}
-    \end{equation}
-    \vspace{1cm}
-    \begin{equation}
-        \begin{bmatrix}1&-2\\-1&2\end{bmatrix}
-        \times
-        \begin{bmatrix}1&-1\\-2&2\end{bmatrix}
+        \det\left(
+            \begin{bmatrix}
+                a&b\\
+                c&d
+            \end{bmatrix}
+        \right)
         =
-        \begin{bmatrix}2&-4\\-4&8\end{bmatrix}
+        ad-bc
     \end{equation}
+
     \begin{equation}
-        \Sigma=X^T\times X
+        \det=(4-\lambda)(5-\lambda)-(1)(2)
+    \end{equation}
+
+    \begin{equation}
+        \det=-\lambda^2-9\lambda+18
     \end{equation}
 \end{frame}
 
+
 \begin{frame}
-    \frametitle{Matrice A - Valeurs propres}
+    \frametitle{Les vrais valeurs propres}
     \begin{equation}
-        \det(\Sigma-\lambda I)=0
+        \lambda=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
     \end{equation}
 
     \begin{equation}
-    \det\left(
-    \begin{bmatrix}2&-4\\-4&8\end{bmatrix}
-    -\lambda\begin{bmatrix}1&0\\0&1\end{bmatrix}\right)=0
+        \lambda=\frac{9\pm3}{2}
     \end{equation}
 
-    \begin{equation}
-        \det\left(\begin{bmatrix}2-\lambda&-4\\-4&8-\lambda\end{bmatrix}\right)=0
-    \end{equation}
-
-    \begin{equation}
-        \det\left(\begin{bmatrix}a&b\\ c&d\end{bmatrix}\right)=ad-bc
-    \end{equation}
-
-    \begin{equation}
-        \det=(2-\lambda)(8-\lambda)-(-4)(-4)\rightarrow\lambda^2-10\lambda
-    \end{equation}
-
-    \vspace{0.5cm}
+    \vspace{1cm}
 
     \begin{columns}
 		\begin{column}{0.5\textwidth}
 			\centering
-			$\lambda_0=0$
+			\begin{equation}
+                \lambda=\frac{9+3}{2}
+            \end{equation}
+            \begin{equation}
+                \lambda=6
+            \end{equation}
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\centering
-			$\lambda_1=10$
+			\begin{equation}
+                \lambda=\frac{9-3}{2}
+            \end{equation}
+            \begin{equation}
+                \lambda=3
+            \end{equation}
 		\end{column}
 	\end{columns}
 \end{frame}
+
+
 
 \begin{frame}
     \frametitle{Matrice A - Vecteurs propres - Fonctions}
     \begin{columns}
 		\begin{column}{0.5\textwidth}
 			\centering
-			$\Sigma-\lambda I$
+			$A-\lambda I$
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\centering
-			$\Sigma \vec v=10\vec v$
+			$A \vec v=\lambda\vec v$
 		\end{column}
 	\end{columns}
 
@@ -144,29 +116,29 @@
     \begin{columns}
 		\begin{column}{0.5\textwidth}
 			\centering
-			$\lambda=10$
+			$\lambda=6$
 
             \begin{equation}
                 \begin{bmatrix}
-                    2&-4\\
-                    -4&8
+                    4&1\\
+                    2&5
                 \end{bmatrix}
                 -
                 \begin{bmatrix}
-                    10&0\\
-                    0&10
+                    6&0\\
+                    0&6
                 \end{bmatrix}
                 =
                 \begin{bmatrix}
-                    -8&-4\\
-                    -4&-2
+                    -2&1\\
+                    2&-1
                 \end{bmatrix}
             \end{equation}
 
             \begin{equation}
                 \begin{bmatrix}
-                    -8&-4\\
-                    -4&-2
+                    -2&1\\
+                    2&-1
                 \end{bmatrix}
                 \begin{bmatrix}
                     x\\y
@@ -178,40 +150,40 @@
             \end{equation}
 
             \begin{equation}
-                -8x+-4y=0
+                -2x+1y=0
             \end{equation}
             \begin{equation}
-                -4x+-2y=0
+                2x-1y=0
             \end{equation}
             \begin{equation}
-                -2x-y=0
+                2x-y=0
             \end{equation}
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\centering
-			$\lambda=0$
+			$\lambda=3$
 
             \begin{equation}
-                \begin{bmatrix}
-                    2&-4\\
-                    -4&8
+               \begin{bmatrix}
+                    4&1\\
+                    2&5
                 \end{bmatrix}
                 -
                 \begin{bmatrix}
-                    0&0\\
-                    0&0
+                    3&0\\
+                    0&3
                 \end{bmatrix}
                 =
                 \begin{bmatrix}
-                    2&-4\\
-                    -4&8
+                    1&1\\
+                    2&2
                 \end{bmatrix}
             \end{equation}
 
             \begin{equation}
                 \begin{bmatrix}
-                    2&-4\\
-                    -4&8
+                    1&1\\
+                    2&2
                 \end{bmatrix}
                 \begin{bmatrix}
                     x\\y
@@ -223,56 +195,16 @@
             \end{equation}
 
             \begin{equation}
-                2x-4y=0
+                1x+1y=0
             \end{equation}
             \begin{equation}
-                -4x+8y=0
+                2x+2y=0
             \end{equation}
             \begin{equation}
-                x-2y=0
+                x-y=0
             \end{equation}
 		\end{column}
 	\end{columns}    
-\end{frame}
-
-\begin{frame}
-    \frametitle{Matrice A - Vecteurs propres - Résultats}
-\begin{columns}
-		\begin{column}{0.5\textwidth}
-			\centering
-			$\lambda=10$
-            \begin{equation}
-                -2x-y=0
-            \end{equation}
-            \vspace{0.5cm}
-            $$x=1$$
-            $$y=-2$$
-            \vspace{0.5cm}
-            \begin{equation}
-                \vec u_{10}=
-                \begin{bmatrix}
-                    1 \\ -2
-                \end{bmatrix}
-            \end{equation}
-		\end{column}
-		\begin{column}{0.5\textwidth}
-			\centering
-			$\lambda=0$
-            \begin{equation}
-                x-2y=0
-            \end{equation}
-            \vspace{0.5cm}
-            $$y=1$$
-            $$x=2$$
-            \vspace{0.5cm}
-            \begin{equation}
-                \vec u_0=
-                \begin{bmatrix}
-                    2 \\ 1
-                \end{bmatrix}
-            \end{equation}
-		\end{column}
-	\end{columns}
 \end{frame}
 
 \begin{frame}
