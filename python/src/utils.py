@@ -9,28 +9,34 @@ def polar(theta: float, r: int | float = 1.0) -> complex:
     """
     return r * np.exp(1j * theta)
 
+
 def is_orthogonal(matrix: np.ndarray, tol: float = 1e-8) -> bool:
     """
     Checks if a matrix is orthogonal:
     Q^T Q = I
-    
+
     Parameters:
         matrix : np.ndarray
         tol : tolerance for floating point comparison
-        
+
     Returns:
         bool
     """
     if matrix.shape[0] != matrix.shape[1]:
         return False  # Must be square
-    
+
     identity = np.eye(matrix.shape[0])
     product = matrix.T @ matrix
-    
+
     return np.allclose(product, identity, atol=tol)
+
 
 def dB2Amp(val: int | float | np.ndarray) -> float | np.ndarray:
     return np.power(10.0, np.asarray(val, dtype=float) / 20.0)
+
+
+def normfreq(freq: float | int, rate: float | int):
+    return (2 * pi * freq) / rate
 
 
 def amp2dB(val: int | float | np.ndarray) -> float | np.ndarray:
