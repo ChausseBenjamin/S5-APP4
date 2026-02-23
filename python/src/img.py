@@ -14,13 +14,14 @@ so that calling them externally looks like:
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import scipy.signal as sig
 
 # Directory constants
 _input = "input"
 _output = "output"
 
 
-def load_png(path):
+def load_png(path: str) -> np.ndarray:
     plt.gray()
     data = mpimg.imread(path)
     if data.ndim == 3:
@@ -28,34 +29,38 @@ def load_png(path):
     return data
 
 
-def original():
+def original() -> np.ndarray:
     """
     Load the original image as npy data
     """
     return load_png(f"{_input}/goldhill.png")
 
 
-def aberrated():
+def aberrated() -> np.ndarray:
     return np.load(f"{_input}/goldhill_aberrations.npy")
 
 
-def noisy():
+def noisy() -> np.ndarray:
     return np.load(f"{_input}/goldhill_bruit.npy")
 
 
-def rotated():
+def rotated() -> np.ndarray:
     return load_png(f"{_input}/goldhill_rotate.png")
 
 
-def complete():
+def complete() -> np.ndarray:
     return np.load(f"{_input}/image_complete.npy")
 
 
-def save(filename, data):
+def apply(b: np.ndarray, a: np.ndarray, data: np.ndarray):
+    return sig.lfilter(b, a, data.copy())
+
+
+def save(filename: str, data: np.ndarray) -> None:
     """
     Save npy data as a png into the default output directory
     """
-    plt.imsave(f"{_output}/{filename}", data)
+    plt.imsave(f"{_output}/{filename}", data, cmap="gray")
 
 
 def main():
