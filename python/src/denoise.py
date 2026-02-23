@@ -12,6 +12,7 @@ from scipy.signal import sosfreqz
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.signal as sig
+import img
 
 # Criterias
 # - Assume the sampling rate is 1600 Hz
@@ -41,6 +42,21 @@ def ellip(n: int = 1, output: str = "sos"):
     return sig.ellip(
         n, _fluctuation, abs(_damp_amp), _cutoff, btype="low", fs=_rate, output=output
     )
+
+
+def manual(output: str = "sos"):
+    """
+    Butterworth filter calculated by hand:
+      Numerator: z^2 + 2z + 1
+      Denominator: 2.39z^2 + 1.1z + 0.505
+    """
+    b = np.array([1.0, 2.0, 1.0])
+    a = np.array([2.39, 1.1, 0.505])
+
+    if output == "ba":
+        return b, a
+    else:
+        return sig.tf2sos(b, a)
 
 
 def overlay(ax):
@@ -125,6 +141,8 @@ def multiNPlot(filter, ax, name: str = "Filtre", max: int = 12):
 
 
 def main():
+    orig = img.noisy()
+
     types = {
         "Butterworth": butter,
         "Chebyshev I": cheby1,
@@ -174,6 +192,38 @@ def main():
     # Poles and zeroes of chosen filter
     b, a = ellip(3, "ba")
     zplane(b, a, "denoise-chosen-zplane.pdf")
+    py_fix = img.apply(b, a, orig)
+
+    # Filter calculated by hand in the frequency domain
+    fig, ax = plt.subplots(figsize=(11.5, 4.5))
+    sos = manual()
+    w, h = freqplot(sos)
+    h_db = amp2dB(np.abs(h))
+    ax.semilogx(w, h_db, label="$H(z)$ calculé à main")
+    # overlay(ax)
+    ax.set_ylim(-70, 3)
+    ax.set_xlim(0, _nyquist)
+    ax.set_xlabel("Fréquence [Hz]")
+    ax.set_ylabel("Amplitude [dB]")
+    ax.grid(True, which="both", ls="--", alpha=0.3)
+    ax.legend()
+    fig.savefig(
+        f"{_output}/denoise-manual-freq.pdf",
+        bbox_inches="tight",
+    )
+    plt.close(fig)
+
+    b, a = manual("ba")
+    zplane(b, a, f"denoise-manual-zplane.pdf")
+    manual_fix = img.apply(b, a, orig)
+
+    imgs = {
+        "orig": orig,
+        "manual": manual_fix,
+        "python": py_fix,
+    }
+    for name, data in imgs.items():
+        img.save(f"denoise-result-{name}.png", data)
 
 
 if __name__ == "__main__":

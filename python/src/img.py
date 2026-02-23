@@ -14,6 +14,7 @@ so that calling them externally looks like:
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import scipy.signal as sig
 
 # Directory constants
 _input = "input"
@@ -49,6 +50,13 @@ def rotated() -> np.ndarray:
 
 def complete() -> np.ndarray:
     return np.load(f"{_input}/image_complete.npy")
+
+
+def apply(b: np.ndarray, a: np.ndarray, data: np.ndarray):
+    result = data.copy()
+    for row in range(result.shape[0]):
+        result[row, :] = sig.lfilter(b, a, result[row, :])
+    return result
 
 
 def save(filename: str, data: np.ndarray) -> None:

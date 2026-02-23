@@ -42,13 +42,9 @@ def fix(data: np.ndarray) -> np.ndarray:
     Apply the inverse filter from `inverse()` to every row and column in the input data
     """
     b, a = inverse()
-
-    result = data.copy()
-    for col in range(result.shape[1]):
-        result[:, col] = signal.lfilter(a, b, result[:, col])
-    for row in range(result.shape[0]):
-        result[row, :] = signal.lfilter(a, b, result[row, :])
-    return result
+    # TODO: Why must I invert a and b for this shit work??? There is a fuck
+    # somewhere, right?
+    return img.apply(a, b, data)
 
 
 def main():
