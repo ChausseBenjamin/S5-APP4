@@ -73,16 +73,12 @@
 
 \begin{frame}
     \frametitle{Matrice A - Vecteurs propres - Fonctions}
-		\begin{align*}
-			A&-\lambda I &
-			A \vec v&=\lambda\vec v
-		\end{align*}
 
 		\begin{columns}
 		\begin{column}{0.5\textwidth}
-			\centering
 
-			\begin{align}
+			\scriptsize{\begin{align}
+			A&-\lambda I \nonumber \\
 				\lambda_2&=6 \nonumber \\
 				\begin{bmatrix} 4&1\\ 2&5 \end{bmatrix}
 				  - \begin{bmatrix} 6&0\\ 0&6 \end{bmatrix}
@@ -93,26 +89,45 @@
 				-2x+1y&=0 \\
 				2x-1y&=0 \\
 				2x-y&=0
-			\end{align}
+			\end{align}}
 		\end{column}
-		\begin{column}{0.5\textwidth}
-			\centering
 
-            \begin{align}
-							\lambda_1&=3 \nonumber\\
-              \begin{bmatrix} 4&1\\ 2&5 \end{bmatrix}
-                - \begin{bmatrix} 3&0\\ 0&3 \end{bmatrix}
-								&= \begin{bmatrix} 1&1\\ 2&2 \end{bmatrix} \\
-							\begin{bmatrix} 1&1\\ 2&2 \end{bmatrix}
-							  \begin{bmatrix} x\\y \end{bmatrix}
-								&= \begin{bmatrix} 0\\0 \end{bmatrix} \\
-							1x+1y&=0 \\
-							2x+2y&=0 \\
-							x-y&=0
-            \end{align}
+		\begin{column}{0.5\textwidth}
+			\scriptsize{\begin{align}
+				A \vec v&=\lambda\vec v \nonumber\\
+				\lambda_1&=3 \nonumber\\
+				\begin{bmatrix} 4&1\\ 2&5 \end{bmatrix}
+					- \begin{bmatrix} 3&0\\ 0&3 \end{bmatrix}
+					&= \begin{bmatrix} 1&1\\ 2&2 \end{bmatrix} \\
+				\begin{bmatrix} 1&1\\ 2&2 \end{bmatrix}
+					\begin{bmatrix} x\\y \end{bmatrix}
+					&= \begin{bmatrix} 0\\0 \end{bmatrix} \\
+				1x+1y&=0 \\
+				2x+2y&=0 \\
+				x-y&=0
+			\end{align}}
 		\end{column}
 	\end{columns}
-	\vspace{3cm}
+
+	\begin{columns}
+		\begin{column}{0.3\textwidth}
+			\quickfigure{
+				\scriptsize{Original}
+			}{compressed-original}{.7}{compressed-original.png}
+		\end{column}
+		\begin{column}{0.3\textwidth}
+			\quickfigure{
+				\scriptsize{Compression 50\%}
+			}{compressed-fifty}{.7}{compressed-fifty.png}
+		\end{column}
+		\begin{column}{0.3\textwidth}
+			\quickfigure{
+				\scriptsize{Compression 70\%}
+			}{compressed-seventy}{.7}{compressed-seventy.png}
+		\end{column}
+
+	\end{columns}
+
 \end{frame}
 
 \begin{frame}[fragile]
