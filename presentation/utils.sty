@@ -34,7 +34,6 @@
 
 % Make sure documents aren't published with missing contents
 \newcommand{\todo}[1]{\begin{color}{Red}\textbf{TODO:} #1\end{color}}
-\newcommand{\note}[1]{\begin{color}{Orange}\textbf{NOTE:} #1\end{color}}
 \newcommand{\fixme}[1]{\begin{color}{Fuchsia}\textbf{FIXME:} #1\end{color}}
 \newcommand{\question}[1]{\begin{color}{ForestGreen}\textbf{QUESTION:} #1\end{color}}
 
@@ -44,7 +43,7 @@
 % When multiple variables must be defined at once
 % LHS-> math mode, RHS -> Text mode
 % Optional parameter is the work "Where" introducing the block
-\newenvironment{definitions}[1][Where:]
+\newenvironment{defs}[1][Where:]
   {#1 \par\vspace{\abovedisplayskip}\noindent
    \tabularx{\columnwidth}{>{$}l<{$} @{${}\colon{}$} >{\raggedright\arraybackslash}X}}
   {\endtabularx\par\vspace{\belowdisplayskip}}
