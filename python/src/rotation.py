@@ -69,8 +69,8 @@ def rotate_picture(image: np.ndarray, angle: float):
 def main():
     image = img.rotated()
     img.save("rotated-orig.png", image)
-    rotated = fix(image)
-    img.save("rotated-fixed.png", rotated)
+    rotated = rotate_picture(image, 45)
+    img.save("rotated-example.png", rotated)
 
     image = img.philippe()
     image = fix(image)
