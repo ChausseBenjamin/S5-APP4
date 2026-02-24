@@ -1,6 +1,7 @@
 import numpy as np
 import img
 
+
 def fix(data):
     """
     returns an image rotated by 90 degrees
@@ -12,10 +13,11 @@ def fix(data):
 
     return data
 
+
 def get_transformation_array(angle: float):
     """
-        Builds a pixel coordinate transformation table
-        so 2x2
+    Builds a pixel coordinate transformation table
+    so 2x2
     """
     radians = np.deg2rad(angle)
     sin = np.sin(radians)
@@ -24,10 +26,7 @@ def get_transformation_array(angle: float):
     sin = np.round(sin, decimals=10)
     cos = np.round(cos, decimals=10)
 
-    return np.array([
-    [cos, -sin],
-    [sin, cos]
-    ])
+    return np.array([[cos, -sin], [sin, cos]])
 
 
 def rotate_picture(image: np.ndarray, angle: float):
@@ -68,9 +67,15 @@ def rotate_picture(image: np.ndarray, angle: float):
 
 
 def main():
-    image = img.philippe()
+    image = img.rotated()
+    img.save("rotated-orig.png", image)
     rotated = fix(image)
-    img.save("rotated.png", rotated)
+    img.save("rotated-fixed.png", rotated)
+
+    image = img.philippe()
+    image = fix(image)
+    img.save("rotated.png", image)
+
 
 if __name__ == "__main__":
     main()
