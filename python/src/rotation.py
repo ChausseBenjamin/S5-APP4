@@ -36,8 +36,8 @@ def rotate_picture(image: np.ndarray, angle: float):
     h, w = image.shape
     rotated = np.zeros((h, w))
 
-    cx = (w - 1) / 2
-    cy = (h - 1) / 2
+    center_x = (w - 1) / 2
+    center_y = (h - 1) / 2
 
     # Output grid (destination pixels)
     x = np.arange(w)
@@ -45,16 +45,16 @@ def rotate_picture(image: np.ndarray, angle: float):
     xx, yy = np.meshgrid(x, y)
 
     # Shift origin to center
-    x_shifted = xx - cx
-    y_shifted = yy - cy
+    x_shifted = xx - center_x
+    y_shifted = yy - center_y
 
     coords = np.vstack((x_shifted.ravel(), y_shifted.ravel()))
 
     # Map BACK into source image
     source_coords = R.T @ coords
 
-    ip = (source_coords[0] + cx).round().astype(int)
-    jp = (source_coords[1] + cy).round().astype(int)
+    ip = (source_coords[0] + center_x).round().astype(int)
+    jp = (source_coords[1] + center_y).round().astype(int)
 
     ip = ip.reshape(h, w)
     jp = jp.reshape(h, w)
