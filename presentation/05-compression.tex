@@ -207,13 +207,11 @@
 	\end{columns}    
 \end{frame}
 
-\begin{frame}
-\frametitle{Théorie — Valeurs et vecteurs propres}
-\todo{}
-\end{frame}
-
-\begin{frame}
-\frametitle{Implémentation et résultats}
-\todo{}
-\end{frame}
-
+\begin{lstlisting}
+def load_png(path: str) -> np.ndarray:
+    plt.gray()
+    data = mpimg.imread(path)
+    if data.ndim == 3:
+        return np.mean(data, -1)
+    return data
+\end{lstlisting}
