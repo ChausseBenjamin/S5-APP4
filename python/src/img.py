@@ -51,6 +51,8 @@ def rotated() -> np.ndarray:
 def complete() -> np.ndarray:
     return np.load(f"{_input}/image_complete.npy")
 
+def philippe() -> np.ndarray:
+    return load_png(f"{_input}/IMG-Philippe-Gournay-20260202111650.png")
 
 def apply(b: np.ndarray, a: np.ndarray, data: np.ndarray):
     return sig.lfilter(b, a, data.copy())
