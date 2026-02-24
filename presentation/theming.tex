@@ -2,13 +2,32 @@
 
 \lstset{
     language=Python,
-    basicstyle=\footnotesize\ttfamily,
+    basicstyle=\tiny\ttfamily,
     keywordstyle=\color{blue},
     commentstyle=\color{gray},
     stringstyle=\color{orange},
     identifierstyle=\color{black},
-    emph={load_png, plt, mpimg, np, ndarray},
-    emphstyle=\color{orange},
+    % First emphasis group (group 1)
+    emph={
+      load_png, 
+      plt, 
+      mpimg, 
+      np, 
+      ndarray,
+      np.cov,
+      np.mean
+    },
+    emphstyle=\color{teal},
+    % Second emphasis group (group 2)
+    emph={[2]{
+      get_covariance_matrix,
+      get_eigen,
+      get_change_of_basis_matrix,
+      compute_change_of_basis,
+      compress_projected,
+      reconstruct_image
+    }},
+    emphstyle={[2]\color{purple}},
     showstringspaces=false,
     breaklines=true,
     frame=single

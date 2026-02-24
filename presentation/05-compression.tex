@@ -207,11 +207,60 @@
 	\end{columns}    
 \end{frame}
 
+\begin{frame}[fragile]
 \begin{lstlisting}
-def load_png(path: str) -> np.ndarray:
-    plt.gray()
-    data = mpimg.imread(path)
-    if data.ndim == 3:
-        return np.mean(data, -1)
-    return data
+    cov, mean, centered = get_covariance_matrix(image)
+    eigenvalues, eigenvectors = get_eigen(cov)
+    P = get_change_of_basis_matrix(eigenvectors)
+    projected = compute_change_of_basis(centered, P)
+    compressed = compress_projected(projected, keep_ratio)
+    reconstructed = reconstruct_image(compressed, P, mean)
 \end{lstlisting}
+
+\begin{lstlisting}[fragile]
+def get_covariance_matrix(image: np.ndarray):
+    mean = np.mean(image, axis=0)
+    centered = image - mean
+    covariance = np.cov(centered, rowvar=False)
+    return covariance, mean, centered
+\end{lstlisting}
+
+\begin{lstlisting}[fragile]
+def get_eigen(covariance: np.ndarray):
+    eigenvalues, eigenvectors = np.linalg.eig(covariance)
+    idx = np.argsort(eigenvalues)[::-1] # Tri décroissant
+    return eigenvalues[idx], eigenvectors[:, idx]
+\end{lstlisting}
+
+\begin{lstlisting}[fragile]
+def get_change_of_basis_matrix(eigenvectors: np.ndarray):
+    return eigenvectors.T
+\end{lstlisting}
+
+\begin{lstlisting}[fragile]
+def compute_change_of_basis(image: np.ndarray, change_of_basis_matrix: np.ndarray):
+    return image @ change_of_basis_matrix.T
+\end{lstlisting}
+
+\begin{lstlisting}[fragile]
+def compute_change_of_basis(image: np.ndarray, change_of_basis_matrix: np.ndarray):
+    return image @ change_of_basis_matrix.T
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}[fragile]
+def compress_projected(projected: np.ndarray, keep_ratio: float):
+    compressed = projected.copy()
+    n_components = projected.shape[1]
+    k = int(n_components * keep_ratio)
+    compressed[:, k:] = 0
+    return compressed
+\end{lstlisting}
+
+\begin{lstlisting}[fragile]
+def reconstruct_image(compressed, change_of_basis_matrix, mean):
+    reconstructed = compressed @ change_of_basis_matrix
+    return reconstructed += mean
+\end{lstlisting}
+\end{frame}
