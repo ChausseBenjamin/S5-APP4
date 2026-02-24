@@ -6,7 +6,6 @@
 
 \begin{frame}
 \frametitle{Transformation bilinéaire — Théorie}
-\todo{ Les grandes ligne des calculs (+explications) pour resoudre le $H(z)$ final}
 \begin{enumerate}
     \item Normalization des fréquences digitals
     \item Application de la distortion (gauchissement des fréquences)
@@ -17,66 +16,45 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Transformation bilinéaire — Conversion des fréquences}
-	\begin{columns}
-		\begin{column}{0.5\textwidth}
-			\centering
-			$f_e = 1600\,\text{Hz}$
+	% \frametitle{Transformation bilinéaire — Conversion des fréquences}
+	\frametitle{Transformation bilinéaire}
+	\begin{columns}[t]
+		\begin{column}{0.4\textwidth}
+			\textbf{Conversion en fréquences}:
+			\footnotesize{\begin{align}
+				f_e &= 1600 \nonumber \\
+				f_c &= 500\,\text{Hz} \nonumber \\
+		    \bar{\omega}_d&=\frac{2\pi f_d}{f_e} \\
+				\bar\omega_c&=\frac{5\pi}{8} \\
+				\omega_a&=\frac{2}{T_e}\tan\left(\frac{\bar\omega_d}{2}\right) \\
+				\omega_c&=4789.14 \nonumber
+			\end{align}}
+
 		\end{column}
-		\begin{column}{0.5\textwidth}
-			\centering
-			$f_c = 500\,\text{Hz}$
+		\begin{column}{0.6\textwidth}
+			\textbf{Remplacement dans l'équation donnée}
+			\footnotesize{\begin{align}
+				H(s)&=\frac{1}{(\frac{s}{\omega_c})^2+\sqrt2(\frac{s}{\omega_c})+1} \\
+				H(s)&=\frac{1}{(\frac{s}{4789.14})^2+\sqrt2(\frac{s}{4789.14})+1} \\
+				s&=\frac{2}{T_e}\cdot\frac{1-z^{-1}}{1+z^{-1}} \\
+				H(z)&=\frac{1}{
+				(\frac{
+				3200\frac{1-z^{-1}}{1+z^{-1}}}
+				{4789.14})^2
+				+\sqrt2
+				(\frac{
+				3200\frac{1-z^{-1}}{1+z^{-1}}
+				}{4789.14})
+				+1}
+			\end{align}}
+
 		\end{column}
 	\end{columns}
-
-	\vspace{0.5cm}
-
-	\begin{equation}
-		\bar{\omega}_d&=\frac{2\pi f_d}{f_e}
-	\end{equation}
-	\begin{equation}
-		\bar\omega_c&=\frac{5\pi}{8}
-	\end{equation}
-	\begin{equation}
-		\omega_a&=\frac{2}{T_e}\tan\left(\frac{\bar\omega_d}{2}\right)
-	\end{equation}
-	\begin{equation}
-		\omega_c&=4789.14
-	\end{equation}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Transformation bilinéaire — Remplacement dans l'équation donnée}
-	\begin{equation}
-		H(s)=\frac{1}{(\frac{s}{\omega_c})^2+\sqrt2(\frac{s}{\omega_c})+1}
-	\end{equation}
-	\begin{equation}
-		H(s)=\frac{1}{(\frac{s}{4789.14})^2+\sqrt2(\frac{s}{4789.14})+1}
-	\end{equation}
-
-	\vspace{0.5cm}
-
-	\begin{equation}
-		s=\frac{2}{T_e}\cdot\frac{1-z^{-1}}{1+z^{-1}}
-	\end{equation}
-	\begin{equation}
-		H(z)=\frac{1}{
-		(\frac{
-		3200\frac{1-z^{-1}}{1+z^{-1}}}
-		{4789.14})^2
-		+\sqrt2
-		(\frac{
-		3200\frac{1-z^{-1}}{1+z^{-1}}
-		}{4789.14})
-		+1}
-	\end{equation}
 \end{frame}
 
 \begin{frame}
 \frametitle{Transformation bilinéaire — Résultats}
 \textbf{Équation obtenue:}
-% Numerator: z^2 + 2z + 1
-% Denominator: 2.39z^2 + 1.1z + 0.505
 	\begin{equation}
 		H(z) = \frac{ z^2 + 2z + 1 }{ 2.39z^2 + 1.1z + 0.505 }
 	\end{equation}

@@ -1,3 +1,4 @@
+
 \begin{frame}
     \frametitle{Compression Matrice A — Théorie}
     \begin{enumerate}
@@ -27,75 +28,47 @@
 
 
 \begin{frame}
-    \frametitle{Déterminants pour les valeurs propres}
-    \begin{equation}
-        \det(A-\lambda I)=0
-    \end{equation}
+    \frametitle{Déterminants et valeurs propres}
+		\begin{columns}[t]
 
-    \begin{equation}
+		\begin{column}{.5\linewidth}
+		\textbf{Déterminant}:
+			\footnotesize{\begin{align}
+			\det(A-\lambda I)&=0 \\
         \det\left(
         \begin{bmatrix}
             4-\lambda&1\\
             2&5-\lambda
         \end{bmatrix}
-        \right)=0
-    \end{equation}
-
-    \begin{equation}
+        \right)&=0 \\
         \det\left(
             \begin{bmatrix}
                 a&b\\
                 c&d
             \end{bmatrix}
         \right)
-        =
-        ad-bc
-    \end{equation}
+				&=
+        ad-bc \\
+				(4-\lambda)(5-\lambda)-(1)(2) &= \det\\
+				-\lambda^2-9\lambda+18 &= \det
+			\end{align}}
 
-    \begin{equation}
-        \det=(4-\lambda)(5-\lambda)-(1)(2)
-    \end{equation}
-
-    \begin{equation}
-        \det=-\lambda^2-9\lambda+18
-    \end{equation}
-\end{frame}
-
-
-\begin{frame}
-    \frametitle{Les vrais valeurs propres}
-    \begin{equation}
-        \lambda=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
-    \end{equation}
-
-    \begin{equation}
-        \lambda=\frac{9\pm3}{2}
-    \end{equation}
-
-    \vspace{1cm}
-
-    \begin{columns}
-		\begin{column}{0.5\textwidth}
-			\centering
-			\begin{equation}
-                \lambda=\frac{9+3}{2}
-            \end{equation}
-            \begin{equation}
-                \lambda=6
-            \end{equation}
 		\end{column}
-		\begin{column}{0.5\textwidth}
-			\centering
-			\begin{equation}
-                \lambda=\frac{9-3}{2}
-            \end{equation}
-            \begin{equation}
-                \lambda=3
-            \end{equation}
+		\begin{column}{.5\linewidth}
+		\textbf{Valeurs propres}:
+			\footnotesize{
+				\begin{align}
+				\lambda   &= \frac{-b\pm\sqrt{b^2-4ac}}{2a} \\
+				\lambda   &= \frac{9\pm3}{2}
+				\end{align}
+				\begin{align}
+				\lambda_1 &= \frac{9-3}{2} & \lambda_2 &= \frac{9+3}{2} \\
+				\lambda_1 &= 3             & \lambda_2 &= 6
+			\end{align}}
+
 		\end{column}
 	\end{columns}
 \end{frame}
-
 
 
 \begin{frame}
@@ -204,7 +177,7 @@
                 x-y=0
             \end{equation}
 		\end{column}
-	\end{columns}    
+	\end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
