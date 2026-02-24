@@ -73,25 +73,17 @@
 
 \begin{frame}
     \frametitle{Matrice A - Vecteurs propres - Fonctions}
-    \begin{columns}
-		\begin{column}{0.5\textwidth}
-			\centering
-			$A-\lambda I$
-		\end{column}
-		\begin{column}{0.5\textwidth}
-			\centering
-			$A \vec v=\lambda\vec v$
-		\end{column}
-	\end{columns}
+		\begin{align*}
+			A&-\lambda I &
+			A \vec v&=\lambda\vec v
+		\end{align*}
 
-    \vspace{0.5cm}
-
-    \begin{columns}
+		\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\centering
-			$\lambda_2=6$
 
 			\begin{align}
+				\lambda_2&=6 \nonumber \\
 				\begin{bmatrix} 4&1\\ 2&5 \end{bmatrix}
 				  - \begin{bmatrix} 6&0\\ 0&6 \end{bmatrix}
 				  &= \begin{bmatrix} -2&1\\ 2&-1 \end{bmatrix} \\
@@ -105,9 +97,9 @@
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\centering
-			$\lambda_1=3$
 
             \begin{align}
+							\lambda_1&=3 \nonumber\\
               \begin{bmatrix} 4&1\\ 2&5 \end{bmatrix}
                 - \begin{bmatrix} 3&0\\ 0&3 \end{bmatrix}
 								&= \begin{bmatrix} 1&1\\ 2&2 \end{bmatrix} \\
@@ -120,6 +112,7 @@
             \end{align}
 		\end{column}
 	\end{columns}
+	\vspace{3cm}
 \end{frame}
 
 \begin{frame}[fragile]
