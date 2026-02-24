@@ -52,7 +52,7 @@ def rotate_picture(image: np.ndarray, angle: float):
     coords = np.vstack((x_shifted.ravel(), y_shifted.ravel()))
 
     # Map BACK into source image
-    source_coords = R @ coords
+    source_coords = R.T @ coords
 
     ip = (source_coords[0] + cx).round().astype(int)
     jp = (source_coords[1] + cy).round().astype(int)
