@@ -62,3 +62,34 @@
 		\end{column}
 	\end{columns}
 \end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}[fragile]
+def get_transformation_array(angle: float):
+    radians = np.deg2rad(angle)
+    sin = np.round(np.sin(radians), decimals=10)
+    cos = np.round(np.cos(radians), decimals=10)
+    return np.array([[cos, -sin], [sin, cos]])
+
+def rotate_picture(image: np.ndarray, angle: float):
+    R = get_transformation_array(angle)
+    h, w = image.shape
+    rotated = np.zeros((h, w))
+    center_x = (w - 1) / 2
+    center_y = (h - 1) / 2
+    x = np.arange(w)            # Output grid (destination pixels)
+    y = np.arange(h)
+    xx, yy = np.meshgrid(x, y)
+    x_shifted = xx - center_x	# Shift origin to center
+    y_shifted = yy - center_y
+    coords = np.vstack((x_shifted.ravel(), y_shifted.ravel()))
+    source_coords = R.T @ coords # Map BACK into source image
+    ip = (source_coords[0] + center_x).round().astype(int)
+    jp = (source_coords[1] + center_y).round().astype(int)
+    ip = ip.reshape(h, w)
+    jp = jp.reshape(h, w)
+    mask = (0 <= ip) & (ip < w) & (0 <= jp) & (jp < h)
+    rotated[mask] = image[jp[mask], ip[mask]]
+    return rotated
+\end{lstlisting}
+\end{frame}
