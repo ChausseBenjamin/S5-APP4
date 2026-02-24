@@ -22,6 +22,17 @@ def main():
     for name, data in steps.items():
         img.save(f"complete-{name}.png", data)
 
+    # Brute force re-generate every unit test
+    pkgs = [
+        aberration,
+        compression,
+        denoise,
+        img,
+        rotation,
+    ]
+    for pkg in pkgs:
+        pkg.main()
+
 
 if __name__ == "__main__":
     main()

@@ -1,3 +1,64 @@
+\renewcommand{\e}{\vec{e_1}}
+\newcommand{\ee}{\vec{e_2}}
+
+\renewcommand{\u}{\vec{u_1}}
+\newcommand{\uu}{\vec{u_2}}
+
+\renewcommand{\v}{v_1}
+\newcommand{\vv}{v_2}
+
+\newcommand{\vp}{v_1^\prime}
+\newcommand{\vvp}{v_2^\prime}
+\newcommand{\hpi}{\frac{-\pi}{2}}
+
 
 \begin{frame}
+	\begin{columns}[t]
+		\begin{column}{0.6\textwidth}
+			\textbf{Changement de base:}
+			\quickfigure{\footnotesize{Changement de base}}{base-change
+			}{.66}{base-change.png}\vspace{-.7cm}
+
+			\footnotesize{\begin{align}
+					E &= \{ \e, \ee \}
+					&U = \{ \u, \uu \} \\
+					\e &= 0\u + (-1)\uu
+					&\ee = \u + 0\uu
+			\end{align}
+			\begin{align}
+					\v\e + \vv\ee &= \vp\u + \vvp\uu \\
+					\v(0\u - \uu) + \vv(\u + 0\uu) &= \vp\u + \vvp\uu \\
+					(0\v + \vv)\u + (-\v + 0\vv)\uu &= \vp\u + \vvp\uu \\
+					\begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}
+					\begin{bmatrix} \v \\ \vv \end{bmatrix} &=
+					\begin{bmatrix} \vp \\ \vvp \end{bmatrix}
+			\end{align}}
+
+
+		\end{column}
+		\begin{column}{0.4\textwidth}
+		\textbf{Matrice de passage:}
+
+		\footnotesize{\begin{align}
+		\theta &= \hpi \\
+		T &= \begin{bmatrix}
+						\cos\theta & -\sin\theta \\
+						\sin\theta & \cos\theta \\
+         \end{bmatrix} \\
+		T &= \begin{bmatrix}
+						\cos\hpi & -\sin\hpi \\
+						\sin\hpi & \cos\hpi \\
+         \end{bmatrix} \\
+		T &= \begin{bmatrix}
+						0 & 1 \\
+						-1 & 0 \\
+         \end{bmatrix}
+		\end{align}}
+
+		\quickfigure{
+			\tiny{Exemple de rotation}
+		}{rotated-example}{.6}{rotated-example.png}
+
+		\end{column}
+	\end{columns}
 \end{frame}
